@@ -1,6 +1,6 @@
 #include <iostream>
 int main()
 {
-	std::cout << "Fuck off" << endl;
+	std::cout << "CLion Master Race" << std::endl;
 	return 0;
 }
