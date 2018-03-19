@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+/MIEIC_TP.vcxproj.filters
+/MIEIC_TP.vcxproj
+/MIEIC_TP.sln
+/.gitattributes
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/MIEIC_TP/v15/Browse.VC.opendb
+/.vs/ProjectSettings.json
+/.vs/MIEIC_TP/v15/Browse.VC.db
+/.vs/MIEIC_TP/v15/.suo
+/.vs/MIEIC_PROG_TP_1/v15/.suo
