@@ -1,6 +1,2 @@
 #include <iostream>
-int main()
-{
-	std::cout << "CLion Master Race" << std::endl;
-	return 0;
-}
+#include "Get_Words.h"
