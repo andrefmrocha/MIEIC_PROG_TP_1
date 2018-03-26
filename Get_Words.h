@@ -8,9 +8,9 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-
+#include <algorithm>
 using namespace std;
 
 vector<string>  get_Dic(string filename);
-vector<string> get_Words(ifstream infile);
+void remove_Duplicates(vector<string> &word_Vec);
 #endif //TRABALHO_PRATICO_GET_WORDS_H

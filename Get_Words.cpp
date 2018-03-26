@@ -4,7 +4,7 @@
 #include "Get_Words.h"
 using namespace std;
 vector<string> get_Words(ifstream infile);
-// Gets the Dictionary
+// Gets the Dictionary and saves into vector
 vector<string> get_Dic(string filename)
 {
     ifstream infile(filename);
@@ -38,6 +38,12 @@ vector<string> get_Dic(string filename)
         }
     }
     return word_Vec;
+}
+
+// Uses the fact that the vector is ordered to erase by using the unique algorithm
+void remove_Duplicates(vector<string> &word_Vec)
+{
+    word_Vec.erase( unique(word_Vec.begin(), word_Vec.end()));
 }
 
 
