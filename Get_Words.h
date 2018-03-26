@@ -6,6 +6,10 @@
 #define TRABALHO_PRATICO_GET_WORDS_H
 #include <string>
 #include <fstream>
+#include <vector>
 
-void get_dic(string filename);
+using namespace std;
+
+ifstream get_dic(string filename);
+vector<string> get_Words(ifstream infile);
 #endif //TRABALHO_PRATICO_GET_WORDS_H

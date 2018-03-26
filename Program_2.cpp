@@ -2,11 +2,6 @@
 // Created by joaom on 23-03-2018.
 //
 #include "Program_2.h"
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <vector>
-
 using namespace std;
 
 // Abre ficheiro e percorre cada linha extraindo para o vetor atraves do push_back
