@@ -3,31 +3,41 @@
 //
 #include "Get_Words.h"
 using namespace std;
+vector<string> get_Words(ifstream infile);
 // Gets the Dictionary
-ifstream get_Dic(string filename)
+vector<string> get_Dic(string filename)
 {
     ifstream infile(filename);
     while (!infile.is_open())
     {
         infile.open(filename);
     }
-    return infile;
-}
 
-// Sorts all information into single vector
-vector<string> get_Words(ifstream infile)
-{
+    // Sorts all information into single vector
     vector<string> word_Vec;
     string saving_String;
     while(getline(infile, saving_String))
     {
+        if(saving_String == "")
+        {
+            continue;
+        }
+        bool flag = true;           //check if there's an invalid character
         for (int i = 0; i < saving_String.length(); ++i)
         {
             char character = saving_String[i];
-            if (character >= 'A' && character <='Z')
+            if (character < 'A' || character >'Z')
             {
-                word_Vec.push_back(saving_String);
+                flag = false;
+                break;
             }
         }
+        if(flag)
+        {
+            word_Vec.push_back(saving_String);
+        }
     }
+    return word_Vec;
 }
+
+

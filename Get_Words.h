@@ -7,9 +7,10 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
-ifstream get_dic(string filename);
+vector<string>  get_Dic(string filename);
 vector<string> get_Words(ifstream infile);
 #endif //TRABALHO_PRATICO_GET_WORDS_H
