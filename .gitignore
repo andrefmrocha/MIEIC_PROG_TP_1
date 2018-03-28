@@ -41,3 +41,6 @@
 /.vs/MIEIC_TP/v15/Browse.VC.db
 /.vs/MIEIC_TP/v15/.suo
 /.vs/MIEIC_PROG_TP_1/v15/.suo
+
+#JetBrains
+.idea/
