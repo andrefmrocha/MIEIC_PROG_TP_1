@@ -99,23 +99,19 @@ vector<string> SearchWords(const vector<string> &valWords, const vector<string> 
 // function that asks the user for a set of letters and stores them into a vector, proceeding to search for valid words that contain the same given letters.
 void GiveWords(const vector<string> &fileVec) {
     vector<string> setLetters;
-    cout << "Which letters do want to use to form words? (CTRL+Z to stop)";
+    cout << "Which letters do want to use to form words? (CTRL+Z to stop) ";
     string chr;
     while (!cin.eof()) {                                  //a cycle to carry in every valid char (as string) input by user
         cin >> chr;                                        // and store it in a vector that holds the set of N letters
         setLetters.push_back(chr);
     }
     int Nsize = setLetters.size();
-    vector<string> valWords = WordsNLetters(fileVec,
-                                            Nsize);    //reduces the number of words to search for, to those with the same length as the number of letters given
-    vector<string> PosWords = SearchWords(valWords,
-                                          setLetters); // calls the function that will return the vector of valid words
+    vector<string> valWords = WordsNLetters(fileVec, Nsize);    //reduces the number of words to search for, to those with the same length as the number of letters given
+    vector<string> PosWords = SearchWords(valWords, setLetters); // calls the function that will return the vector of valid words
     if (PosWords.empty()) {
-        cout << "There is no match for the given letters."
-             << endl;    // if no words are found with the given letters, a error message shall appear on the screen
+        cout << "There is no match for the given letters." << endl;    // if no words are found with the given letters, a error message shall appear on the screen
     } else {
-        cout << "The list of valid words is: "
-             << endl;                  // the list of valid words are written into the screen, already ordered
+        cout << "The list of valid words is: " << endl;                  // the list of valid words are written into the screen, already ordered
         for (int i = 0; i < PosWords.size(); i++) {
             cout << PosWords[i] << endl;
         }
