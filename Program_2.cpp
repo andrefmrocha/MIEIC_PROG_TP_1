@@ -128,16 +128,8 @@ vector<string> randomWord(const vector<string> &fileVec) {
     srand((time(NULL)));
     int wordI = rand() % fileVec.size();   // randomly selects an index from the file vector
     string word = fileVec[wordI];          // stores the selected word
-    vector<char> wordVec;
-    for (int i = 0; i < word.length(); i++) {          // converts the string into a vector of chars
-        wordVec.push_back(word[i]);
-    }
-    next_permutation(wordVec.begin(),wordVec.end());     // scrambles the chars in the vector
-    string rword;
-    for (int i = 0; i < wordVec.size(); i++)              //builds back the word, now with random placed chars
-    {
-    rword.push_back(wordVec[i]);
-    }
+    string rword = fileVec[wordI];         // ANDRÉ :creates a copy of the word
+    next_permutation(rword.begin(),rword.end());     // scrambles the chars in the vector
     vector<string> words;                              //returns the right word and the scrambled word
     words.push_back(word);
     words.push_back(rword);
@@ -147,12 +139,12 @@ vector<string> randomWord(const vector<string> &fileVec) {
 //This function interacts with user, giving in a scrambled word to guess with 3 tries, if not successful, a 'end of game' message shall appear
 void guessWord(const vector<string> &fileVec) {
     vector<string> words = randomWord(fileVec);
-    string rword = words[0];                          // gets a random word and its scrambled copy from the randomWord function
-    string word = words[1];
+    string rword = words[1];                          // gets a random word and its scrambled copy from the randomWord function
+    string word = words[0];             // ANDRÉ: Words were being stored the other way around
     string guess;
     bool flag = false;           //this flag will set if the user won the game or not
     cout << "The word to guess is " << rword << ". What is your guess? ";
-    for (int i = 3; i > 0; i--) {
+    for (int i = 3; i > 0; i--) {                   //ANDRÉ: Suggestion - Run the word through a function to make it all uppercases, in case it isn't
         cin >> guess;
         if (guess == word) {                                                //the user has 3 tries to guess the word
             cout << "You chose wisely. Congratulations!" << endl;           //and each interaction has its own message
