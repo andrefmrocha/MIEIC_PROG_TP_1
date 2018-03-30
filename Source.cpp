@@ -2,7 +2,10 @@
 #include "Store_Words.h"
 int main()
 {
-    vector<string> word_Vec = get_Dic("29765-8.txt");
+    string filename;
+    cout << "Select which file to use: ";
+    cin >> filename;
+    vector<string> word_Vec = get_Dic(filename);
     /* Before removing duplicates, it is needed to sort the vector, however that is not needed
        as of now since our test dataset is already ordered */
     quickSort(word_Vec);

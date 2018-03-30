@@ -8,6 +8,7 @@ vector<string> get_Words(ifstream infile);
 // Gets the Dictionary and saves into vector
 vector<string> get_Dic(string filename)
 {
+    cout << "Opening " << filename << "..." << endl;
     ifstream infile(filename);
     while (!infile.is_open())
     {
@@ -17,8 +18,17 @@ vector<string> get_Dic(string filename)
     // Sorts all information into single vector
     vector<string> word_Vec;
     string saving_String;
+    int i = 0;
+    char current_character = 'A';
+    cout << "Starting collection of all words ... " << endl;
+    cout << current_character << endl;
     while(getline(infile, saving_String))
     {
+        if(i == 20)
+        {
+            printf(".");
+            i = 0;
+        }
         if(saving_String.empty() || saving_String == "\n" || saving_String == "\r" || saving_String == " ")
         {
             continue;
@@ -42,15 +52,23 @@ vector<string> get_Dic(string filename)
         }
         if(flag)
         {
+            if(saving_String[0] > current_character)
+            {
+                current_character++;
+                cout << '\n' << current_character << endl;
+            }
             if(multWord_flag)
             {
                 push2Plus_Words(word_Vec, saving_String); // function for 2+ words
+                i++;
             }
             else
             {
                 word_Vec.push_back(saving_String);
+                i++;
             }
         }
+
     }
     return word_Vec;
 }
