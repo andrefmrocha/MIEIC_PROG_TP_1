@@ -44,3 +44,4 @@
 
 #JetBrains
 .idea/
+/.idea/vcs.xml
