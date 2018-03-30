@@ -56,7 +56,8 @@ void IsWordInList(const vector<string> &fileVec) {
     cout << "What is the word you want to search? (ALL CAPS ONLY) " << endl;
     cin >> target;
     bool valOp;
-    valOp = binary_search(fileVec.begin(), fileVec.end(),target);    // Using the binary search algorithm from std library
+    valOp = binary_search(fileVec.begin(), fileVec.end(),
+                          target);    // Using the binary search algorithm from std library
     if (valOp) {                                                      // to ease the program building
         cout << "The word is valid." << endl;
     } else {
@@ -106,25 +107,77 @@ void GiveWords(const vector<string> &fileVec) {
         setLetters.push_back(chr);
     }
     int Nsize = setLetters.size();
-    vector<string> valWords = WordsNLetters(fileVec, Nsize);    //reduces the number of words to search for, to those with the same length as the number of letters given
-    vector<string> PosWords = SearchWords(valWords, setLetters); // calls the function that will return the vector of valid words
+    vector<string> valWords = WordsNLetters(fileVec,
+                                            Nsize);    //reduces the number of words to search for, to those with the same length as the number of letters given
+    vector<string> PosWords = SearchWords(valWords,
+                                          setLetters); // calls the function that will return the vector of valid words
     if (PosWords.empty()) {
-        cout << "There is no match for the given letters." << endl;    // if no words are found with the given letters, a error message shall appear on the screen
+        cout << "There is no match for the given letters."
+             << endl;    // if no words are found with the given letters, a error message shall appear on the screen
     } else {
-        cout << "The list of valid words is: " << endl;                  // the list of valid words are written into the screen, already ordered
+        cout << "The list of valid words is: "
+             << endl;                  // the list of valid words are written into the screen, already ordered
         for (int i = 0; i < PosWords.size(); i++) {
             cout << PosWords[i] << endl;
         }
     }
 }
 
+//This function selects a word randomly from the list, scrambles it and return a vector of the word to be guessed and the scrambled one
+vector<string> randomWord(const vector<string> &fileVec) {
+    srand((time(NULL)));
+    int wordI = rand() % fileVec.size();   // randomly selects an index from the file vector
+    string word = fileVec[wordI];          // stores the selected word
+    vector<char> wordVec;
+    for (int i = 0; i < word.length(); i++) {          // converts the string into a vector of chars
+        wordVec.push_back(word[i]);
+    }
+    next_permutation(wordVec.begin(),wordVec.end());     // scrambles the chars in the vector
+    string rword;
+    for (int i = 0; i < wordVec.size(); i++)              //builds back the word, now with random placed chars
+    {
+    rword.push_back(wordVec[i]);
+    }
+    vector<string> words;                              //returns the right word and the scrambled word
+    words.push_back(word);
+    words.push_back(rword);
+    return words;
+}
+
+//This function interacts with user, giving in a scrambled word to guess with 3 tries, if not successful, a 'end of game' message shall appear
+void guessWord(const vector<string> &fileVec) {
+    vector<string> words = randomWord(fileVec);
+    string rword = words[0];                          // gets a random word and its scrambled copy from the randomWord function
+    string word = words[1];
+    string guess;
+    bool flag = false;           //this flag will set if the user won the game or not
+    cout << "The word to guess is " << rword << ". What is your guess? ";
+    for (int i = 3; i > 0; i--) {
+        cin >> guess;
+        if (guess == word) {                                                //the user has 3 tries to guess the word
+            cout << "You chose wisely. Congratulations!" << endl;           //and each interaction has its own message
+            flag = true;                                                    // either if guesses right or wrong
+            break;
+        } else if (i == 1) {
+            break;
+        } else {
+            cout << "You chose poorly. Try again." << endl;
+        }
+    }
+    if (!flag) {                                                   // if all tries have been used and the user didn't guess
+        cout << "You lose. Better luck next time..." << endl;      // the game ends with a positive message :')
+    }
+}
+
+
 int main() {
     ifstream file_words;
     vector<string> fileVec;
     OpenToVec(file_words, fileVec);
     /* testingOTV(fileVec);
-    IsWordInList(fileVec);*/
-    GiveWords(fileVec);
+    IsWordInList(fileVec);
+    GiveWords(fileVec);*/
+    guessWord(fileVec);
     return 0;
 }
 

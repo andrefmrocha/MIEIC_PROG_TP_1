@@ -13,6 +13,8 @@
 #include <cmath>
 #include <ctime>
 #include <numeric>
+#include <locale>
+#include <sstream>
 using namespace std;
 
 void OpenToVec(ifstream &file_words, vector<string> &fileVec);
@@ -22,5 +24,8 @@ void IsWordInList(const vector<string> &fileVec);
 vector<string> WordsNLetters(const vector<string> &fileVec, int Nsize);
 vector<string> SearchWords(const vector<string> &valWords, const vector<string> &setLetters);
 void GiveWords(const vector<string> &fileVec);
+vector<string> randomWord(const vector<string> &fileVec);
+void guessWord(const vector<string> &fileVec);
+
 
 #endif //CRL_PROGRAM_2_H
