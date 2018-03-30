@@ -1,5 +1,5 @@
 #include "Get_Words.h"
-
+#include "Store_Words.h"
 int main()
 {
     vector<string> word_Vec = get_Dic("29765-8.txt");
@@ -8,5 +8,6 @@ int main()
     quickSort(word_Vec);
     remove_Duplicates(word_Vec);
     remove_Null(word_Vec);
+    store_Words(word_Vec);
     return 0;
 }
