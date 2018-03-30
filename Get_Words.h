@@ -15,4 +15,7 @@ vector<string>  get_Dic(string filename);
 void remove_Duplicates(vector<string> &word_Vec);
 void push2Plus_Words(vector<string> &word_Vec, string saving_String);
 void trim_String(string &saving_String);
+void quickSort(vector<string> &word_Vec);
+void remove_Null(vector<string> &word_Vec);
+void push_Words(vector<string> &word_Vec, string saving_String);
 #endif //TRABALHO_PRATICO_GET_WORDS_H
