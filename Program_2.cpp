@@ -50,11 +50,20 @@ void testingOTV(const vector<string> &fileVec) {
 }
 */
 
+
+
+void UpperInput(string &input) {
+    for (int i = 0; i < input.length(); i++) {
+        input[i] = _toupper(input[i]);
+    }
+}
+
 // Asks the user for the input string, searches it and check if its valid or not.
 void IsWordInList(const vector<string> &fileVec) {
     string target;
     cout << "What is the word you want to search? (ALL CAPS ONLY) " << endl;
     cin >> target;
+    UpperInput(target);
     bool valOp;
     valOp = binary_search(fileVec.begin(), fileVec.end(),
                           target);    // Using the binary search algorithm from std library
@@ -102,6 +111,7 @@ void GiveWords(const vector<string> &fileVec) {
     vector<string> setLetters;
     cout << "Which letters do want to use to form words? (CTRL+Z to stop) ";
     string chr;
+    UpperInput(chr);
     while (!cin.eof()) {                                  //a cycle to carry in every valid char (as string) input by user
         cin >> chr;                                        // and store it in a vector that holds the set of N letters
         setLetters.push_back(chr);
@@ -129,7 +139,7 @@ vector<string> randomWord(const vector<string> &fileVec) {
     int wordI = rand() % fileVec.size();   // randomly selects an index from the file vector
     string word = fileVec[wordI];          // stores the selected word
     string rword = fileVec[wordI];         // ANDRÉ :creates a copy of the word
-    next_permutation(rword.begin(),rword.end());     // scrambles the chars in the vector
+    next_permutation(rword.begin(), rword.end());     // scrambles the chars in the vector
     vector<string> words;                              //returns the right word and the scrambled word
     words.push_back(word);
     words.push_back(rword);
@@ -144,8 +154,10 @@ void guessWord(const vector<string> &fileVec) {
     string guess;
     bool flag = false;           //this flag will set if the user won the game or not
     cout << "The word to guess is " << rword << ". What is your guess? ";
-    for (int i = 3; i > 0; i--) {                   //ANDRÉ: Suggestion - Run the word through a function to make it all uppercases, in case it isn't
+    for (int i = 3; i >
+                    0; i--) {                   //ANDRÉ: Suggestion - Run the word through a function to make it all uppercases, in case it isn't
         cin >> guess;
+        UpperInput(guess);
         if (guess == word) {                                                //the user has 3 tries to guess the word
             cout << "You chose wisely. Congratulations!" << endl;           //and each interaction has its own message
             flag = true;                                                    // either if guesses right or wrong
@@ -162,14 +174,37 @@ void guessWord(const vector<string> &fileVec) {
 }
 
 
+vector<int> NumberOcorrencesLetter(const vector<string> &fileVec) {
+    vector<int> NOL;
+    NOL.resize(26);
+    string elem;
+    char elem2;
+    int x;
+    for (int i = 0; i < fileVec.size(); i++) {
+        elem = fileVec[i];
+        for (int i2 = 0; i2 < elem.length(); i2++) {
+            elem2 = elem[i2];
+            x = atoi(reinterpret_cast<const char *>(elem2))-65;
+            NOL[x] = NOL[x]++;
+        }
+    }
+    return NOL;
+}
+
+
 int main() {
     ifstream file_words;
     vector<string> fileVec;
     OpenToVec(file_words, fileVec);
     /* testingOTV(fileVec);
     IsWordInList(fileVec);
-    GiveWords(fileVec);*/
-    guessWord(fileVec);
+    GiveWords(fileVec);
+    guessWord(fileVec);*/
+    vector<int> test1 = NumberOcorrencesLetter(fileVec);
+    for (int i = 0; i < test1.size(); i++) {
+        cout << test1[i] << " ";
+    }
+    cout << endl;
     return 0;
 }
 

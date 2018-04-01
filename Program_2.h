@@ -21,6 +21,7 @@ void OpenToVec(ifstream &file_words, vector<string> &fileVec);
 void testingOTV(const vector<string> &fileVec);
 bool BiSearch(const vector<string> &fileVec, const string &target);
 void IsWordInList(const vector<string> &fileVec);
+void UpperInput (string &input);
 vector<string> WordsNLetters(const vector<string> &fileVec, int Nsize);
 vector<string> SearchWords(const vector<string> &valWords, const vector<string> &setLetters);
 void GiveWords(const vector<string> &fileVec);
