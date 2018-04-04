@@ -27,6 +27,4 @@ vector<string> SearchWords(const vector<string> &valWords, const vector<string> 
 void GiveWords(const vector<string> &fileVec);
 vector<string> randomWord(const vector<string> &fileVec);
 void guessWord(const vector<string> &fileVec);
-
-
 #endif //CRL_PROGRAM_2_H

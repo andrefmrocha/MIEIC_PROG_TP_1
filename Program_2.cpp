@@ -2,6 +2,7 @@
 // Created by joaom on 23-03-2018.
 //
 #include "Program_2.h"
+#include "Prog_2_Andre.h"
 
 using namespace std;
 
@@ -174,7 +175,8 @@ void guessWord(const vector<string> &fileVec) {
 }
 
 
-vector<int> NumberOcorrencesLetter(const vector<string> &fileVec) {
+vector<int> NumberOcorrencesLetter(const vector<string> &fileVec)
+{
     vector<int> NOL;
     NOL.resize(26);
     string elem;
@@ -197,14 +199,20 @@ int main() {
     vector<string> fileVec;
     OpenToVec(file_words, fileVec);
     /* testingOTV(fileVec);
-    IsWordInList(fileVec);
-    GiveWords(fileVec);
-    guessWord(fileVec);*/
-    vector<int> test1 = NumberOcorrencesLetter(fileVec);
+    IsWordInList(fileVec); */
+//    GiveWords(fileVec);
+//    guessWord(fileVec);
+/*    vector<int> test1 = NumberOcorrencesLetter(fileVec);
     for (int i = 0; i < test1.size(); i++) {
         cout << test1[i] << " ";
     }
-    cout << endl;
+    cout << endl*/;
+    letterCounter word;
+    word = wordsLetters("MEIAS");
     return 0;
 }
+
+
+
+
 
