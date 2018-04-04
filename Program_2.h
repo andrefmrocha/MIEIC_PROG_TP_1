@@ -15,6 +15,7 @@
 #include <numeric>
 #include <locale>
 #include <sstream>
+#include <cstring>
 using namespace std;
 
 void OpenToVec(ifstream &file_words, vector<string> &fileVec);
@@ -24,6 +25,9 @@ void IsWordInList(const vector<string> &fileVec);
 void UpperInput (string &input);
 vector<string> WordsNLetters(const vector<string> &fileVec, int Nsize);
 vector<string> SearchWords(const vector<string> &valWords, const vector<string> &setLetters);
+vector<int> IndexValWords(vector<struct letterCounter> CTS, struct letterCounter wordletters);
+vector<struct letterCounter> ConvertToStruct(const vector<string> &fileVec);
+void PrintValWords(const vector<string> &fileVec, vector<int> indexval);
 void GiveWords(const vector<string> &fileVec);
 vector<string> randomWord(const vector<string> &fileVec);
 void guessWord(const vector<string> &fileVec);
