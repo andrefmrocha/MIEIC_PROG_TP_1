@@ -9,7 +9,7 @@ using namespace std;
 // Open file e go through each line extrating it to the vector with push_back
 void OpenToVec(ifstream &file_words, vector<string> &fileVec) {
     try {
-        file_words.open("Ex_P2.txt");
+        file_words.open("Words.txt");
     }
     catch (const exception &) {
         cerr << "Input file opening failed.\n";   // error message if opening file fails
@@ -201,9 +201,10 @@ int main() {
     ifstream file_words;
     vector<string> fileVec;
     OpenToVec(file_words, fileVec);
+    vector<letterCounter> lettersVec = ConvertToStruct(fileVec);
     /* testingOTV(fileVec);
     IsWordInList(fileVec); */
-    GiveWords(fileVec);
+//    GiveWords(fileVec);
 //    guessWord(fileVec);
     return 0;
 }
