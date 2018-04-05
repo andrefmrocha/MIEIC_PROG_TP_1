@@ -24,10 +24,9 @@ vector<string> get_Dic(string filename)
     cout << current_character << endl;
     while(getline(infile, saving_String))
     {
-        if(i == 20)
+        if(word_Vec.size() % 100)
         {
-            printf(".");
-            i = 0;
+            cout << '.';
         }
         if(saving_String.empty() || saving_String == "\n" || saving_String == "\r" || saving_String == " ")
         {
@@ -39,18 +38,18 @@ vector<string> get_Dic(string filename)
         for (int i = 0; i < saving_String.size(); ++i)
         {
             char character = saving_String[i];
-            if ((character < 'A' || character >'Z' ) && character != ';' && character != '\n' && character!='\r')
-            {
-                flag = false;
-                break;
-            }
             if(character == ';')
             {
                 multWord_flag = true;
+                break;
+            }
+            else if ((character < 'A' || character >'Z' ) && character != '\n' && character!='\r')
+            {
+                flag = false;
             }
 
         }
-        if(flag)
+        if(flag || multWord_flag)
         {
             if(saving_String[0] > current_character)
             {
@@ -60,12 +59,10 @@ vector<string> get_Dic(string filename)
             if(multWord_flag)
             {
                 push2Plus_Words(word_Vec, saving_String); // function for 2+ words
-                i++;
             }
             else
             {
                 word_Vec.push_back(saving_String);
-                i++;
             }
         }
 
@@ -78,7 +75,7 @@ vector<string> get_Dic(string filename)
 // Uses the fact that the vector is ordered to erase by using the unique algorithm
 void remove_Duplicates(vector<string> &word_Vec)
 {
-    word_Vec.erase( unique(word_Vec.begin(), word_Vec.end()));
+    word_Vec.erase( unique(word_Vec.begin(), word_Vec.end()), word_Vec.end());
 }
 
 void push2Plus_Words(vector<string> &word_Vec, string saving_String)
@@ -91,13 +88,19 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String)
         if(character == ';')
         {
             saving_Word = saving_String.substr(last_index, i-last_index);
-            word_Vec.push_back(saving_Word);
+            if(valid_Word(saving_Word))
+            {
+                word_Vec.push_back(saving_Word);
+            }
             last_index = i + 2;
         }
-        if(i == saving_String.size() - 1)
+        if(i == saving_String.size() - 1 && character!=';')
         {
             saving_Word = saving_String.substr(last_index,i+1 - last_index);
-            word_Vec.push_back(saving_Word);
+            if(valid_Word(saving_Word))
+            {
+                word_Vec.push_back(saving_Word);
+            }
         }
     }
 }
@@ -109,7 +112,7 @@ void trim_String(string &saving_String)
         saving_String = saving_String.substr(1,saving_String.size()-1);
     }
     char last_char = saving_String[saving_String.size()-1];
-    if(last_char == ' ' || last_char == ' \n' || last_char == '\r')
+    if(last_char == ' ' || last_char == '\n' || last_char == '\r')
     {
         cout << saving_String[saving_String.size()-1];
         saving_String = saving_String.substr(0,saving_String.size()-1);
@@ -146,4 +149,17 @@ void remove_Null(vector<string> &word_Vec)
             i--;
         }
     }
+}
+
+bool valid_Word(string saving_String)
+{
+    for (int i = 0; i < saving_String.size(); ++i) {
+        char character = saving_String[i];
+        if ((character < 'A' || character >'Z' ) && character != '\n' && character!='\r')
+        {
+            return false;
+        }
+
+    }
+    return true;
 }
