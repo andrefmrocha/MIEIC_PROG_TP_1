@@ -51,17 +51,13 @@ vector<string> get_Dic(string filename)
         }
         if(flag || multWord_flag)
         {
-            if(saving_String[0] > current_character)
-            {
-                current_character++;
-                cout << '\n' << current_character << endl;
-            }
             if(multWord_flag)
             {
-                push2Plus_Words(word_Vec, saving_String); // function for 2+ words
+                push2Plus_Words(word_Vec, saving_String, current_character); // function for 2+ words
             }
-            else
+            else if(flag)
             {
+                newChar(saving_String[0], current_character);
                 word_Vec.push_back(saving_String);
             }
         }
@@ -78,8 +74,9 @@ void remove_Duplicates(vector<string> &word_Vec)
     word_Vec.erase( unique(word_Vec.begin(), word_Vec.end()), word_Vec.end());
 }
 
-void push2Plus_Words(vector<string> &word_Vec, string saving_String)
+void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &current_character)
 {
+    newChar(saving_String[0], current_character);
     int last_index = 0;            // Saves the index of the last pushed word
     string saving_Word;
     for(int i = 0; i<saving_String.size(); i++)
@@ -107,7 +104,7 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String)
 
 void trim_String(string &saving_String)
 {
-    if(saving_String[0] == ' ') // Check if there's a space at the beggining of the string
+/*    if(saving_String[0] == ' ') // Check if there's a space at the beggining of the string
     {
         saving_String = saving_String.substr(1,saving_String.size()-1);
     }
@@ -116,7 +113,10 @@ void trim_String(string &saving_String)
     {
         cout << saving_String[saving_String.size()-1];
         saving_String = saving_String.substr(0,saving_String.size()-1);
-    }
+    }*/
+    auto start = saving_String.find_first_not_of(' \n \r');
+    auto end = saving_String.find_last_not_of(' \n \r');
+    saving_String=saving_String.substr(start, end-start+1);
 }
 
 /*bool compareString(const string a,const string b) //Checks if the name needs to be sorted
@@ -162,4 +162,13 @@ bool valid_Word(string saving_String)
 
     }
     return true;
+}
+
+void newChar(char next_char, char &current_char)
+{
+    if(next_char > current_char && next_char >= 'A' && next_char <='Z')
+    {
+        current_char++;
+        cout << '\n' << current_char << endl;
+    }
 }
