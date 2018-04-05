@@ -107,31 +107,52 @@ vector<string> SearchWords(const vector<string> &valWords, const vector<string> 
     return Poswords;
 }
 
-// function that asks the user for a set of letters and stores them into a vector, proceeding to search for valid words that contain the same given letters.
-void GiveWords(const vector<string> &fileVec) {
-    vector<string> setLetters;
-    cout << "Which letters do want to use to form words? (CTRL+Z to stop) ";
-    string chr;
-    UpperInput(chr);
-    while (!cin.eof()) {                                  //a cycle to carry in every valid char (as string) input by user
-        cin >> chr;                                        // and store it in a vector that holds the set of N letters
-        setLetters.push_back(chr);
+//function that reads words from file and organizes them in a new vector, where each word is organized in a struct with his letters
+vector<struct letterCounter> ConvertToStruct(const vector<string> &fileVec) {
+    vector<struct letterCounter> CTS;
+    for (int i = 0; i < fileVec.size(); i++) {
+        letterCounter letword = wordsLetters(fileVec[i]);
+        CTS.push_back(letword);
     }
-    int Nsize = setLetters.size();
-    vector<string> valWords = WordsNLetters(fileVec,
-                                            Nsize);    //reduces the number of words to search for, to those with the same length as the number of letters given
-    vector<string> PosWords = SearchWords(valWords,
-                                          setLetters); // calls the function that will return the vector of valid words
-    if (PosWords.empty()) {
-        cout << "There is no match for the given letters."
-             << endl;    // if no words are found with the given letters, a error message shall appear on the screen
-    } else {
-        cout << "The list of valid words is: "
-             << endl;                  // the list of valid words are written into the screen, already ordered
-        for (int i = 0; i < PosWords.size(); i++) {
-            cout << PosWords[i] << endl;
+    return CTS;
+}
+
+// function that compares the structs of words, to check if they have the same letters and returns the indexes of the valid words to a vector
+vector<int> IndexValWords(vector<struct letterCounter> CTS, struct letterCounter wordletters) {
+    vector<int> IVW;
+    letterCounter *ptr1, *ptr2;
+    ptr1 = &wordletters;
+    for (int i = 0; i < CTS.size(); i++) {
+        ptr2 = &CTS[i];
+        if (memcmp(ptr1, ptr2, sizeof(wordletters)) == 0) {
+            IVW.push_back(i);
         }
     }
+    return IVW;
+}
+
+//checks the vector of int that have the indexes of the valid words and searches in the words vector for them and prints them
+void PrintValWords(const vector<string> &fileVec, vector<int> indexval) {
+    if (!indexval.empty()) {
+        cout << " The possible words that can be made are: " << endl;
+        for (int x = 0; x < indexval.size(); x++) {
+            cout << " " << fileVec[indexval[x]] << endl;
+        }
+    } else { cout << "There are no possible words made with given letters. " << endl; }
+}
+
+// function that asks the user for a set of letters then stores it in a struct organized by letter and compare with the words, then returns the valid words
+void GiveWords(const vector<string> &fileVec) {
+    vector<struct letterCounter> CTS = ConvertToStruct(fileVec);
+    vector<int> indexval;
+    string chr;
+    cout << "Write all letters in sequence to check for words: ";
+    cin >> chr;
+    UpperInput(chr);
+    letterCounter wordletters = wordsLetters(chr);
+    indexval = IndexValWords(CTS, wordletters);
+    PrintValWords(fileVec, indexval);
+
 }
 
 //This function selects a word randomly from the list, scrambles it and return a vector of the word to be guessed and the scrambled one
@@ -146,6 +167,7 @@ vector<string> randomWord(const vector<string> &fileVec) {
     words.push_back(rword);
     return words;
 }
+
 
 //This function interacts with user, giving in a scrambled word to guess with 3 tries, if not successful, a 'end of game' message shall appear
 void guessWord(const vector<string> &fileVec) {
@@ -175,40 +197,14 @@ void guessWord(const vector<string> &fileVec) {
 }
 
 
-vector<int> NumberOcorrencesLetter(const vector<string> &fileVec)
-{
-    vector<int> NOL;
-    NOL.resize(26);
-    string elem;
-    char elem2;
-    int x;
-    for (int i = 0; i < fileVec.size(); i++) {
-        elem = fileVec[i];
-        for (int i2 = 0; i2 < elem.length(); i2++) {
-            elem2 = elem[i2];
-            x = atoi(reinterpret_cast<const char *>(elem2))-65;
-            NOL[x] = NOL[x]++;
-        }
-    }
-    return NOL;
-}
-
-
 int main() {
     ifstream file_words;
     vector<string> fileVec;
     OpenToVec(file_words, fileVec);
     /* testingOTV(fileVec);
     IsWordInList(fileVec); */
-//    GiveWords(fileVec);
+    GiveWords(fileVec);
 //    guessWord(fileVec);
-/*    vector<int> test1 = NumberOcorrencesLetter(fileVec);
-    for (int i = 0; i < test1.size(); i++) {
-        cout << test1[i] << " ";
-    }
-    cout << endl*/;
-    letterCounter word;
-    word = wordsLetters("MEIAS");
     return 0;
 }
 
