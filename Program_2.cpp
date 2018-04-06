@@ -2,7 +2,6 @@
 // Created by joaom on 23-03-2018.
 //
 #include "Program_2.h"
-#include "Prog_2_Andre.h"
 
 using namespace std;
 
@@ -206,5 +205,6 @@ int main() {
     IsWordInList(fileVec); */
 //    GiveWords(fileVec);
 //    guessWord(fileVec);
+    wildcardGame(fileVec);
     return 0;
 }

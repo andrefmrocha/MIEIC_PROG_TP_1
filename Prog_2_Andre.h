@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 using namespace std;
 struct letterCounter
 {
@@ -38,6 +39,7 @@ struct letterCounter
     int z = 0;
 };
 letterCounter wordsLetters(string word);
-
+bool wildcardMatch(const char *str, const char *strWild);
+void wildcardGame(vector<string> wordVec);
 
 #endif //TRABALHO_PRATICO_PROG_2_ANDRE_H
