@@ -27,7 +27,7 @@ vector<string> get_Dic(string filename)
         {
             cout << '.';
         }
-        if(saving_String.empty() || saving_String == "\n" || saving_String == "\r" || saving_String == " ")
+        if(saving_String.empty() || saving_String == "\n" || saving_String == "\r" || saving_String == " " || saving_String == "")
         {
             continue;
         }
@@ -48,7 +48,7 @@ vector<string> get_Dic(string filename)
             }
 
         }
-        if(flag || multWord_flag)
+        if(flag || multWord_flag )
         {
             if(multWord_flag)
             {
@@ -87,6 +87,11 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &curre
         if(character == ';')
         {
             saving_Word = saving_String.substr(last_index, i-last_index);
+            if(saving_Word.empty())
+            {
+                break;
+            }
+            trim_String(saving_Word);
             if(valid_Word(saving_Word))
             {
                 word_Vec.push_back(saving_Word);
@@ -96,6 +101,11 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &curre
         if(i == saving_String.size() - 1 && character!=';')
         {
             saving_Word = saving_String.substr(last_index,i+1 - last_index);
+            if(saving_Word.empty())
+            {
+                break;
+            }
+            trim_String(saving_String);
             if(valid_Word(saving_Word))
             {
                 word_Vec.push_back(saving_Word);
@@ -104,8 +114,7 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &curre
     }
 }
 
-void trim_String(string &saving_String)
-{
+void trim_String(string &saving_String) {
 /*    if(saving_String[0] == ' ') // Check if there's a space at the beggining of the string
     {
         saving_String = saving_String.substr(1,saving_String.size()-1);
@@ -116,9 +125,12 @@ void trim_String(string &saving_String)
         cout << saving_String[saving_String.size()-1];
         saving_String = saving_String.substr(0,saving_String.size()-1);
     }*/
-    auto start = saving_String.find_first_not_of(' \n \r');
-    auto end = saving_String.find_last_not_of(' \n \r');
-    saving_String=saving_String.substr(start, end-start+1);
+    //remove o espaco branco no inicio e no fim da string
+    const auto sBegin = saving_String.find_first_not_of(" \t\n\v\f\r");
+    const auto sEnd = saving_String.find_last_not_of(" \t\n\v\f\r");
+    const auto range = sEnd - sBegin;
+
+    saving_String = saving_String.substr(sBegin, range + 1);
 }
 
 /*bool compareString(const string a,const string b) //Checks if the name needs to be sorted
