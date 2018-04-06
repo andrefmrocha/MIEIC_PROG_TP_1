@@ -8,7 +8,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iostream>
 using namespace std;
-void store_Words(vector<string> word_Vec);
+void store_Words(vector<string> word_Vec, string filename);
 
 #endif //TRABALHO_PRATICO_STORE_WORDS_H

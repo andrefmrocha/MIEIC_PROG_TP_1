@@ -1,7 +1,6 @@
 //
 // Created by andrefmrocha on 21-03-2018.
 //
-#include <strings.h>
 #include "Get_Words.h"
 using namespace std;
 vector<string> get_Words(ifstream infile);
@@ -20,7 +19,7 @@ vector<string> get_Dic(string filename)
     string saving_String;
     int i = 0;
     char current_character = 'A';
-    cout << "Starting collection of all words ... " << endl;
+    cout << "Starting collection of all words from file ... " << filename << endl;
     cout << current_character << endl;
     while(getline(infile, saving_String))
     {
@@ -63,6 +62,7 @@ vector<string> get_Dic(string filename)
         }
 
     }
+    cout << "Number of simple words = " << word_Vec.size() << endl;
     return word_Vec;
 }
 
@@ -71,7 +71,9 @@ vector<string> get_Dic(string filename)
 // Uses the fact that the vector is ordered to erase by using the unique algorithm
 void remove_Duplicates(vector<string> &word_Vec)
 {
+    cout << "Removing duplicate words ..." << endl;
     word_Vec.erase( unique(word_Vec.begin(), word_Vec.end()), word_Vec.end());
+    cout << "Number of non-duplicate words = " << word_Vec.size() << endl;
 }
 
 void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &current_character)
@@ -126,6 +128,7 @@ void trim_String(string &saving_String)
 
 void quickSort(vector<string> &word_Vec)
 {
+    cout << "Sorting words ... " << endl;
     sort(word_Vec.begin(), word_Vec.end());
 //    qsort(word_Vec, word_Vec.size(), sizeof(string), compareString);
 }
