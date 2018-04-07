@@ -194,6 +194,112 @@ void guessWord(const vector<string> &fileVec) {
         cout << "You lose. Better luck next time..." << endl;      // the game ends with a positive message :')
     }
 }
+// This function searches the file for the bigger word and returns its size.
+// Its utility applies when trying to choose the size of a set of letters,
+// there is no point giving more letters than those needed to form a word.
+int biggerword(const vector<string> &fileVec) {
+    int max = fileVec[0].size();
+    for (int i = 1; i < fileVec.size(); i++) {
+        if (fileVec[i].size() > max) {
+            max = fileVec[i].size();
+        }
+    }
+    return max;
+}
+
+//This function goes through all words organized in structs and returns a vector of each character average frequency
+vector<double> frequencyLetters(const vector<struct letterCounter> &letC) {
+    int totalLet = 0;
+    vector<float> absolutefreq;
+    vector <double> relfreq;
+    for (int i = 0; i < letC.size(); i++) {
+        totalLet += letC[i].a + letC[i].b + letC[i].c + letC[i].d + letC[i].e + letC[i].f + letC[i].g +         //This cycle calculates the total number of letters, its heavy but its the way to calculate the
+                    letC[i].h + letC[i].i + letC[i].j + letC[i].k + letC[i].l + letC[i].m + letC[i].n +         //average
+                    letC[i].o + letC[i].p + letC[i].q + letC[i].r + letC[i].s + letC[i].t + letC[i].u +
+                    letC[i].v + letC[i].x + letC[i].w + letC[i].y + letC[i].z;
+    }
+    for (int i2 = 0; i2 < letC.size(); i2++) {
+        absolutefreq[0] += letC[i2].a;
+        absolutefreq[1] += letC[i2].b;                                          //This cycle stores in a vector the absolute frequency
+        absolutefreq[2] += letC[i2].c;                                          // of every letter, that is, how many times they appear on words
+        absolutefreq[3] += letC[i2].d;
+        absolutefreq[4] += letC[i2].e;
+        absolutefreq[5] += letC[i2].f;
+        absolutefreq[6] += letC[i2].g;
+        absolutefreq[7] += letC[i2].h;
+        absolutefreq[8] += letC[i2].i;
+        absolutefreq[9] += letC[i2].j;
+        absolutefreq[10] += letC[i2].k;
+        absolutefreq[11] += letC[i2].l;
+        absolutefreq[12] += letC[i2].m;
+        absolutefreq[13] += letC[i2].n;
+        absolutefreq[14] += letC[i2].o;
+        absolutefreq[15] += letC[i2].p;
+        absolutefreq[16] += letC[i2].q;
+        absolutefreq[17] += letC[i2].r;
+        absolutefreq[18] += letC[i2].s;
+        absolutefreq[19] += letC[i2].t;
+        absolutefreq[20] += letC[i2].u;
+        absolutefreq[21] += letC[i2].v;
+        absolutefreq[22] += letC[i2].x;
+        absolutefreq[23] += letC[i2].w;
+        absolutefreq[24] += letC[i2].y;
+        absolutefreq[25] += letC[i2].z;
+    }
+    for (int i3 = 0; i3<absolutefreq.size();i3++) {                   //this cycle transforms the absolute frequency to average, dividing by the total number of letters
+        absolutefreq[i3] /= totalLet;
+    }
+    for (int i4 = 0; i4 < absolutefreq.size(); i4++) {                // this cycle only moves the values to a vector of doubles instead of float to weight less on the execution
+        relfreq.push_back(absolutefreq[i4]);
+    }
+    return relfreq;
+}
+
+//This function gets the frequency, constructs a random vector of chars from there and returns it for use
+string randsetletters (const vector <struct letterCounter > &letC, const vector<string> &fileVec){
+    vector <double> freqlet = frequencyLetters(letC);
+    vector <int> absfreq;
+    string RSL;
+    int sizebigword = biggerword(fileVec)+1;
+    srand(time(NULL));
+    int sizeofset = rand() % sizebigword+1;     //defines how many letters will be given (here the use of finding the biggest word applies)
+    for (int i = 0; i<freqlet.size(); i++) {
+        absfreq.push_back(static_cast<int &&>(freqlet[i] * sizeofset));       //This determines how many times each letter will be in the set, given its frequency and size of the set
+    }
+    for (int i2 = 0; i2 <absfreq.size(); i2++) {
+        for(int i3 = absfreq[i2]; i3 > 0 ; i3--) {            // This cycle loads the letters of the set into a string and returns it shuffled
+            RSL.push_back(static_cast<char>(i2 + 65));
+        }
+    }
+    next_permutation(RSL.begin(),RSL.end());
+    return RSL;
+}
+
+//This function is the main structure of this part of the program
+//It gives the user the random set of N letters and asks him to
+//give a valid input, a word that is validated and belongs to the list
+//if he fails, he can always try again indefinitely
+void setofLetters(const vector<string> &fileVec) {
+    vector<struct letterCounter> letCount = ConvertToStruct(fileVec);
+    string setofLet = randsetletters(letCount,fileVec);   //calls the function to return the string of the set with N letters
+    cout << "The letters are: " << setofLet << endl;
+    string attempt;
+    bool valword;
+    char anotOp;
+    cout << "Write a valid word: ";
+    do {
+        cin >> attempt;                                                       //after the user attempt, the program searches for it in the list
+        valword = binary_search(fileVec.begin(), fileVec.end(), attempt);     // the responds accordingly, allowing infinite retries
+        if (valword) {
+            cout << "Very Well, that word is valid!" << endl;
+            break;
+        } else {
+            cout << "You guessed wrong.. Do you want to try again? (Y/N) ";
+            cin >> anotOp;
+        }
+    } while (anotOp == 'Y');
+}
+
 
 
 int main() {
@@ -205,6 +311,7 @@ int main() {
     IsWordInList(fileVec); */
 //    GiveWords(fileVec);
 //    guessWord(fileVec);
-    wildcardGame(fileVec);
+ //   wildcardGame(fileVec);
+    setofLetters(fileVec);
     return 0;
 }

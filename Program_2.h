@@ -28,8 +28,12 @@ vector<string> WordsNLetters(const vector<string> &fileVec, int Nsize);
 vector<string> SearchWords(const vector<string> &valWords, const vector<string> &setLetters);
 vector<int> IndexValWords(vector<struct letterCounter> CTS, struct letterCounter wordletters);
 vector<struct letterCounter> ConvertToStruct(const vector<string> &fileVec);
-void PrintValWords(const vector<string> &fileVec, vector<int> indexval);
+void PrintValWords(const vector<string> &fileVec, vector<int> indexval);    
 void GiveWords(const vector<string> &fileVec);
 vector<string> randomWord(const vector<string> &fileVec);
 void guessWord(const vector<string> &fileVec);
+int biggerword(const vector<string> &fileVec);
+vector<double> frequencyLetters(const vector<struct letterCounter> &letC);
+string randsetletters (const vector <struct letterCounter > &letC, const vector<string> &fileVec);
+void setofLetters(const vector<string> &fileVec);
 #endif //CRL_PROGRAM_2_H
