@@ -312,6 +312,7 @@ void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &le
     bool valword;
     bool rightguess= false;
     string anotOp = "N";
+    anotOp.resize(1);
     cout << "Write a valid word: ";
     do {
         cin >> attempt;                   //after the user attempt, the program searches for it in the list
@@ -332,9 +333,9 @@ void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &le
         } else {                         //if he fails, he can always try again until he gets it right
             cout << "There are no words using those letters.. Do you want to try again? (Y/N) ";
             cin >> anotOp;
-            while(invalidWord(anotOp))
+            while( anotOp != "Y" && anotOp != "N")
             {
-                cout << "Invalid Word, please type again ";
+                cout << "Invalid response, please type again ";
                 cin >> anotOp;
                 UpperInput(anotOp);
             }
