@@ -38,8 +38,10 @@ struct letterCounter
     int y = 0;
     int z = 0;
 };
-letterCounter wordsLetters(string word);
+letterCounter wordsLetters(const string &word);
+vector<string> possibleWords(const vector<string> &wordVec, const string &wildcardString);
 bool wildcardMatch(const char *str, const char *strWild);
-void wildcardGame(vector<string> wordVec);
+void wildcardGame(const vector<string> &wordVec);
+bool invalidWord(const string &word);
 
 #endif //TRABALHO_PRATICO_PROG_2_ANDRE_H

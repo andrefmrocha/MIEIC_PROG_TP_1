@@ -6,7 +6,7 @@
 
 
 // Function to find words written with those letters
-letterCounter wordsLetters(string word)
+letterCounter wordsLetters(const string &word)
 {
     letterCounter letters;
     for(int i = 0; i < word.size(); i++)
@@ -149,7 +149,7 @@ bool wildcardMatch(const char *str, const char *strWild)
 }
 
 //Wildcard Functions
-vector<string> possibleWords(vector<string> wordVec, string wildcardString)
+vector<string> possibleWords(const vector<string> &wordVec, const string &wildcardString)
 {
     vector<string> possible_Words;
     for(int i = 0; i<wordVec.size(); i++)
@@ -162,7 +162,7 @@ vector<string> possibleWords(vector<string> wordVec, string wildcardString)
     return possible_Words;
 }
 
-void wildcardGame(vector<string> wordVec)
+void wildcardGame(const vector<string> &wordVec)
 {
     string wildcardString;
     cout << "Write your wildcard word: ";
@@ -173,4 +173,15 @@ void wildcardGame(vector<string> wordVec)
     {
         cout << i + 1 << " - " <<  possible_Words[i] << endl;
     }
+}
+
+bool invalidWord(const string &word)
+{
+    for(int i = 0; i<word.size(); i++)
+    {
+        char character = word[i];
+        if(character < 'A' || character > 'Z')
+            return true;
+    }
+    return false;
 }

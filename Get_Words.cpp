@@ -11,6 +11,7 @@ vector<string> get_Dic(string filename)
     ifstream infile(filename);
     while (!infile.is_open())
     {
+        cout << "File not found! Please write the name of the file again.";
         infile.open(filename);
     }
 

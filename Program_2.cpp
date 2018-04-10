@@ -6,13 +6,11 @@
 using namespace std;
 
 // Open file e go through each line extrating it to the vector with push_back
-void OpenToVec(ifstream &file_words, vector<string> &fileVec) {
-    try {
-        file_words.open("Words.txt");
-    }
-    catch (const exception &) {
-        cerr << "Input file opening failed.\n";   // error message if opening file fails
-        exit(1);
+void OpenToVec(ifstream &file_words, vector<string> &fileVec, string filename) {
+    while (!file_words.is_open())
+    {
+        cout << "File not found! Please write the name of the file again.";
+        file_words.open(filename);
     }
     string line;
     while (getline(file_words, line)) {
@@ -61,16 +59,22 @@ void UpperInput(string &input) {
 // Asks the user for the input string, searches it and check if its valid or not.
 void IsWordInList(const vector<string> &fileVec) {
     string target;
-    cout << "What is the word you want to search? (ALL CAPS ONLY) " << endl;
+    cout << "What is the word you want to search?" << endl;
     cin >> target;
     UpperInput(target);
+    while(invalidWord(target))
+    {
+        cout << "Invalid Word, please type again ";
+        cin >> target;
+        UpperInput(target);
+    }
     bool valOp;
     valOp = binary_search(fileVec.begin(), fileVec.end(),
-                          target);    // Using the binary search algorithm from std library
+                          target);   // Using the binary search algorithm from std library
     if (valOp) {                                                      // to ease the program building
         cout << "The word is valid." << endl;
     } else {
-        cout << "The word is invalid. " << endl;
+        cout << "The word was not found. " << endl;
     }
 }
 
@@ -117,7 +121,7 @@ vector<letterCounter> ConvertToStruct(const vector<string> &fileVec) {
 }
 
 // function that compares the structs of words, to check if they have the same letters and returns the indexes of the valid words to a vector
-vector<int> IndexValWords(vector<letterCounter> lettersVec, letterCounter wordletters) {
+vector<int> IndexValWords(vector<letterCounter> lettersVec,letterCounter wordletters) {
     vector<int> IVW;
     letterCounter *ptr1, *ptr2;
     ptr1 = &wordletters;
@@ -131,7 +135,7 @@ vector<int> IndexValWords(vector<letterCounter> lettersVec, letterCounter wordle
 }
 
 //checks the vector of int that have the indexes of the valid words and searches in the words vector for them and prints them
-void PrintValWords(const vector<string> &fileVec, vector<int> indexval) {
+void PrintValWords(const vector<string> &fileVec,const vector<int> &indexval) {
     if (!indexval.empty()) {
         cout << " The possible words that can be made are: " << endl;
         for (int x = 0; x < indexval.size(); x++) {
@@ -141,16 +145,21 @@ void PrintValWords(const vector<string> &fileVec, vector<int> indexval) {
 }
 
 // function that asks the user for a set of letters then stores it in a struct organized by letter and compare with the words, then returns the valid words
-void GiveWords(const vector<string> &fileVec, vector<letterCounter> lettersVec ) {
+void GiveWords(const vector<string> &fileVec,const vector<letterCounter> &lettersVec ) {
     vector<int> indexval;
     string chr;
     cout << "Write all letters in sequence to check for words: ";
     cin >> chr;
     UpperInput(chr);
+    while(invalidWord(chr))
+    {
+        cout << "Invalid Word, please type again ";
+        cin >> chr;
+        UpperInput(chr);
+    }
     letterCounter wordletters = wordsLetters(chr);
     indexval = IndexValWords(lettersVec, wordletters);
     PrintValWords(fileVec, indexval);
-
 }
 
 //This function selects a word randomly from the list, scrambles it and return a vector of the word to be guessed and the scrambled one
@@ -179,6 +188,12 @@ void guessWord(const vector<string> &fileVec) {
                     0; i--) {                   //ANDRÉ: Suggestion - Run the word through a function to make it all uppercases, in case it isn't
         cin >> guess;
         UpperInput(guess);
+        while(invalidWord(guess))
+        {
+            cout << "Invalid Word, please type again ";
+            cin >> guess;
+            UpperInput(guess);
+        }
         if (guess == word) {                                                //the user has 3 tries to guess the word
             cout << "You chose wisely. Congratulations!" << endl;           //and each interaction has its own message
             flag = true;                                                    // either if guesses right or wrong
@@ -270,7 +285,7 @@ string randsetletters(const vector<letterCounter> &lettersVec, const vector<stri
 }
 
 //this function verifies if the user built a word using the given set of letters
-bool rightsetletters(string setofLet, string attempt) {
+bool rightsetletters(const string &setofLet, const string &attempt) {
     for (int i = 0; i < setofLet.length(); i++) {
         if (attempt.find_first_of(setofLet[i])==string::npos) {  //if the function doesnt find in the attempt the letters from
             return false;                                        //the given set, it returns false
@@ -296,10 +311,17 @@ void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &le
     string attempt;
     bool valword;
     bool rightguess= false;
-    char anotOp = 'N';
+    string anotOp = "N";
     cout << "Write a valid word: ";
     do {
         cin >> attempt;                   //after the user attempt, the program searches for it in the list
+        UpperInput(attempt);
+        while(invalidWord(attempt))
+        {
+            cout << "Invalid Word, please type again ";
+            cin >> attempt;
+            UpperInput(attempt);
+        }
         valword = binary_search(fileVec.begin(), fileVec.end(), attempt);     // and responds accordingly, allowing infinite retries
         rightguess = rightsetletters(setofLet, attempt);  //checks if the user used the same letters from the given set
         if (valword && rightguess) {                // if both conditions verify, the user wins the game
@@ -310,15 +332,21 @@ void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &le
         } else {                         //if he fails, he can always try again until he gets it right
             cout << "There are no words using those letters.. Do you want to try again? (Y/N) ";
             cin >> anotOp;
+            while(invalidWord(anotOp))
+            {
+                cout << "Invalid Word, please type again ";
+                cin >> anotOp;
+                UpperInput(anotOp);
+            }
         }
-    } while (anotOp == 'Y');
+    } while (anotOp == "Y");
 }
 
 
 int main() {
     ifstream file_words;
     vector<string> fileVec;
-    OpenToVec(file_words, fileVec);
+    OpenToVec(file_words, fileVec, "Words.txt");
     vector<letterCounter> lettersVec = ConvertToStruct(fileVec);
     /* testingOTV(fileVec);
     IsWordInList(fileVec); */
