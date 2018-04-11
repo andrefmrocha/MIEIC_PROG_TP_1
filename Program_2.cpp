@@ -7,6 +7,7 @@ using namespace std;
 
 // Open file e go through each line extrating it to the vector with push_back
 void OpenToVec(ifstream &file_words, vector<string> &fileVec, string filename) {
+    file_words.open(filename);
     while (!file_words.is_open())
     {
         cout << "File not found! Please write the name of the file again.";
@@ -344,16 +345,16 @@ void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &le
 }
 
 
-int main() {
+/*int main() {
     ifstream file_words;
     vector<string> fileVec;
     OpenToVec(file_words, fileVec, "Words.txt");
     vector<letterCounter> lettersVec = ConvertToStruct(fileVec);
-    /* testingOTV(fileVec);
-    IsWordInList(fileVec); */
+    *//* testingOTV(fileVec);
+    IsWordInList(fileVec); *//*
 //    GiveWords(fileVec);
 //    guessWord(fileVec);
     //   wildcardGame(fileVec);
     setofLetters(fileVec,lettersVec);
     return 0;
-}
+}*/
