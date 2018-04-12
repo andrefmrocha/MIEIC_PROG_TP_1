@@ -20,7 +20,7 @@ vector<string> get_Dic(string filename)
     cout << current_character << endl;
     while(getline(infile, saving_String))
     {
-        if(word_Vec.size() % 100)           //check if another dot on screen is needed
+        if(!(word_Vec.size() % 100))           //check if another dot on screen is needed
         {
             cout << '.';
         }

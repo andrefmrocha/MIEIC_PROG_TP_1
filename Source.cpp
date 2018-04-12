@@ -10,8 +10,8 @@ int main()
     cout << "Select which file to store the words at: ";
     cin >> outfile;
     vector<string> word_Vec = get_Dic(infile);
+    cout << endl << "Number of simple words = " << word_Vec.size() << endl;
     quickSort(word_Vec);
-    cout << "Number of simple words = " << word_Vec.size() << endl;
     remove_Null(word_Vec);
     remove_Duplicates(word_Vec);
     store_Words(word_Vec, outfile);
