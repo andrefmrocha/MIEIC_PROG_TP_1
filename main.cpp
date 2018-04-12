@@ -14,17 +14,16 @@ int main()
     cin >> filename;
     OpenToVec(file_words, fileVec, filename);
     vector<letterCounter> lettersVec = ConvertToStruct(fileVec);
-    cout << "Welcome to Procdic! Please choose which function would like to use: " << endl;
     string anotOp;
     do
     {
         system("cls");
-        cout << "Menu:" << endl;
-        cout << "1) Check for a word in the list" << endl;
+		cout << "Welcome to Play With Words! Please choose which function would like to use: " << endl << endl;
+		cout << "1) Check for a word in the list" << endl;
         cout << "2) Try to guess a word with its letter" << endl;
         cout << "3) Get all words that can be built with a given set of letters" << endl;
         cout << "4) Give out a random set of letters for you to try and make words with" << endl;
-        cout << "5) Wildcard function" << endl;
+		cout << "5) Wildcard function" << endl << endl;
         int num;
         cin >> num;
         switch (num)
@@ -33,7 +32,7 @@ int main()
                 IsWordInList(fileVec);
                 break;
             case 2:
-                guessWord(fileVec);
+                guessWord(fileVec,lettersVec);
                 break;
             case 3:
                 GiveWords(fileVec, lettersVec);
@@ -47,12 +46,12 @@ int main()
             default:
                 cout << "Function not defined! ";
         }
-        cout << "Would you like to continue(Y/N)" << endl;
+        cout << endl << "Would you like to continue(Y/N)" << endl;
         cin >> anotOp;
         UpperInput(anotOp);
         while( anotOp != "Y" && anotOp != "N")
         {
-            cout << "Invalid response, please type again " << endl;
+            cout << "Invalid response, please type again :" << endl;
             cin >> anotOp;
             UpperInput(anotOp);
         }

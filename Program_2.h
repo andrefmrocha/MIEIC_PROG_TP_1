@@ -20,8 +20,6 @@
 using namespace std;
 
 void OpenToVec(ifstream &file_words, vector<string> &fileVec, string filename);
-void testingOTV(const vector<string> &fileVec);
-bool BiSearch(const vector<string> &fileVec, const string &target);
 void IsWordInList(const vector<string> &fileVec);
 void UpperInput (string &input);
 vector<string> WordsNLetters(const vector<string> &fileVec, int Nsize);
@@ -31,10 +29,10 @@ vector<letterCounter> ConvertToStruct(const vector<string> &fileVec);
 void PrintValWords(const vector<string> &fileVec, const vector<int> &indexval);
 void GiveWords(const vector<string> &fileVec,const vector<letterCounter> &lettersVec );
 vector<string> randomWord(const vector<string> &fileVec);
-void guessWord(const vector<string> &fileVec);
+bool WordIsValid(const string &guess, const vector <int> &IVW, const vector <string> &fileVec);
+void guessWord(const vector<string> &fileVec, const vector <letterCounter> &lettersVec);
 int biggerword(const vector<string> &fileVec);
 vector<double> frequencyLetters(const vector<letterCounter> &letC);
-vector<int> relfreq();
 string randsetletters(const vector<letterCounter> &lettersVec, const vector<string> &fileVec) ;
 bool rightsetletters (const string &setofLet,const string &attempt);
 void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &lettersVec);
