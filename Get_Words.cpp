@@ -15,7 +15,7 @@ vector<string> get_Dic(string filename)
     }
     vector<string> word_Vec;            // word_Vec : stores all valid words
     string saving_String;
-    char current_character = 'A';       // Initiliazes the characters for the screen output
+    unsigned char current_character = 'A';       // Initiliazes the characters for the screen output
     cout << "Starting collection of all words from file ... " << filename << endl;
     cout << current_character << endl;
     while(getline(infile, saving_String))
@@ -33,7 +33,7 @@ vector<string> get_Dic(string filename)
         bool multWord_flag = false; //check if there's 2+ words in a single line
         for (int i = 0; i < saving_String.size(); ++i)
         {
-            char character = saving_String[i];
+            unsigned char character = saving_String[i];
             if(character == ';')            //checks if there's over one word in a line
             {
                 multWord_flag = true;
@@ -72,13 +72,13 @@ void remove_Duplicates(vector<string> &word_Vec)
     cout << "Number of non-duplicate words = " << word_Vec.size() << endl;
 }
 
-void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &current_character)
+void push2Plus_Words(vector<string> &word_Vec, string saving_String, unsigned char &current_character)
 {
     int last_index = 0;            // Saves the index of the last pushed word
     string saving_Word;
     for(int i = 0; i<saving_String.size(); i++)
     {
-        char character = saving_String[i];
+        unsigned char character = saving_String[i];
         if(character == ';')
         {
             saving_Word = saving_String.substr(last_index, i-last_index);   //Forms the substring to save the word
@@ -140,7 +140,7 @@ void remove_Null(vector<string> &word_Vec)      //Removes any null strings on ve
 bool valid_Word(string saving_String)       //Checks if a word is valid(needed to be done separatedly for more
 {                                           //than one situation
     for (int i = 0; i < saving_String.size(); ++i) {
-        char character = saving_String[i];
+        unsigned char character = saving_String[i];
         if ((character < 'A' || character >'Z' ) && character != '\n' && character!='\r')
         {
             return false;
@@ -150,7 +150,7 @@ bool valid_Word(string saving_String)       //Checks if a word is valid(needed t
     return true;
 }
 
-void newChar(char next_char, char &current_char)    // Checks it's needed to change the character on screen
+void newChar(unsigned char next_char, unsigned char &current_char)    // Checks it's needed to change the character on screen
 {
     if(next_char > current_char && next_char >= 'A' && next_char <='Z')
     {
