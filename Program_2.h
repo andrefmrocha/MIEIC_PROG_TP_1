@@ -2,8 +2,8 @@
 // Created by joaom on 23-03-2018.
 //
 
-#ifndef CRL_PROGRAM_2_H
-#define CRL_PROGRAM_2_H
+#ifndef TP_PROGRAM_2_H
+#define TP_PROGRAM_2_H
 #include "Program_2.h"
 #include "Prog_2_Andre.h"
 #include <iostream>
@@ -38,4 +38,4 @@ vector<int> relfreq();
 string randsetletters(const vector<letterCounter> &lettersVec, const vector<string> &fileVec) ;
 bool rightsetletters (const string &setofLet,const string &attempt);
 void setofLetters(const vector<string> &fileVec, const vector<letterCounter> &lettersVec);
-#endif //CRL_PROGRAM_2_H
+#endif //TP_PROGRAM_2_H

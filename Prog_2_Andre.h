@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
-struct letterCounter
+struct letterCounter // The definition of a letter counter method using the public class Struct
 {
     int a = 0;
     int b = 0;

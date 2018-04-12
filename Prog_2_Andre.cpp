@@ -97,8 +97,7 @@ letterCounter wordsLetters(const string &word)
     return letters;
 }
 
-
-// WildcardMatch
+// WildcardMatch function under the appendixes of the project
 bool wildcardMatch(const char *str, const char *strWild)
 {
 // We have a special case where string is empty ("") and the mask is "*".
@@ -148,11 +147,11 @@ bool wildcardMatch(const char *str, const char *strWild)
     return !*str && !*strWild;
 }
 
-//Wildcard Functions
+//Wildcard Function to make the necessary comparison with the wildMatch
 vector<string> possibleWords(const vector<string> &wordVec, const string &wildcardString)
 {
     vector<string> possible_Words;
-    for(int i = 0; i<wordVec.size(); i++)
+    for(int i = 0; i<wordVec.size(); i++)   //Runs through the vector to find all words that fit the criteria
     {
         if(wildcardMatch(wordVec[i].c_str(), wildcardString.c_str()))
         {
@@ -162,7 +161,8 @@ vector<string> possibleWords(const vector<string> &wordVec, const string &wildca
     return possible_Words;
 }
 
-void wildcardGame(const vector<string> &wordVec)
+
+void wildcardGame(const vector<string> &wordVec) //Function to execute the WildcardGame
 {
     string wildcardString;
     cout << "Write your wildcard word: ";
@@ -175,8 +175,8 @@ void wildcardGame(const vector<string> &wordVec)
     }
 }
 
-bool invalidWord(const string &word)
-{
+bool invalidWord(const string &word) //Checks if user inputted word is Invalid
+{                                    //To be used before any user input, to prevent it from failing automatically
     for(int i = 0; i<word.size(); i++)
     {
         char character = word[i];

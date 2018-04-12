@@ -3,34 +3,30 @@
 //
 #include "Get_Words.h"
 using namespace std;
-vector<string> get_Words(ifstream infile);
 // Gets the Dictionary and saves into vector
 vector<string> get_Dic(string filename)
 {
     cout << "Opening " << filename << "..." << endl;
-    ifstream infile(filename);
-    while (!infile.is_open())
+    ifstream infile(filename);      //Opens the filename
+    while (!infile.is_open())       //Checks if the input name does in fact exist
     {
         cout << "File not found! Please write the name of the file again.";
         infile.open(filename);
     }
-
-    // Sorts all information into single vector
-    vector<string> word_Vec;
+    vector<string> word_Vec;            // word_Vec : stores all valid words
     string saving_String;
-    int i = 0;
-    char current_character = 'A';
+    char current_character = 'A';       // Initiliazes the characters for the screen output
     cout << "Starting collection of all words from file ... " << filename << endl;
     cout << current_character << endl;
     while(getline(infile, saving_String))
     {
-        if(word_Vec.size() % 100)
+        if(word_Vec.size() % 100)           //check if another dot on screen is needed
         {
             cout << '.';
         }
         if(saving_String.empty() || saving_String == "\n" || saving_String == "\r" || saving_String == " " || saving_String == "")
         {
-            continue;
+            continue;       //checks for a useless line to go through immediately
         }
         trim_String(saving_String);
         bool flag = true;   //check if there's an invalid character
@@ -38,14 +34,14 @@ vector<string> get_Dic(string filename)
         for (int i = 0; i < saving_String.size(); ++i)
         {
             char character = saving_String[i];
-            if(character == ';')
+            if(character == ';')            //checks if there's over one word in a line
             {
                 multWord_flag = true;
                 break;
             }
             else if ((character < 'A' || character >'Z' ) && character != '\n' && character!='\r')
             {
-                flag = false;
+                flag = false;           //checks for the valid characters on a line
             }
 
         }
@@ -57,13 +53,12 @@ vector<string> get_Dic(string filename)
             }
             else if(flag)
             {
-                newChar(saving_String[0], current_character);
+                newChar(saving_String[0], current_character); //checks if it's needed to change the displayed character
                 word_Vec.push_back(saving_String);
             }
         }
 
     }
-    cout << "Number of simple words = " << word_Vec.size() << endl;
     return word_Vec;
 }
 
@@ -79,7 +74,6 @@ void remove_Duplicates(vector<string> &word_Vec)
 
 void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &current_character)
 {
-    newChar(saving_String[0], current_character);
     int last_index = 0;            // Saves the index of the last pushed word
     string saving_Word;
     for(int i = 0; i<saving_String.size(); i++)
@@ -87,19 +81,19 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &curre
         char character = saving_String[i];
         if(character == ';')
         {
-            saving_Word = saving_String.substr(last_index, i-last_index);
-            if(saving_Word.empty())
+            saving_Word = saving_String.substr(last_index, i-last_index);   //Forms the substring to save the word
+            if(saving_Word.empty()) //Checks for a useless string
             {
                 break;
             }
-            trim_String(saving_Word);
+            trim_String(saving_Word); //Trims the string before pushing it to the vector
             if(valid_Word(saving_Word))
             {
                 word_Vec.push_back(saving_Word);
             }
             last_index = i + 2;
         }
-        if(i == saving_String.size() - 1 && character!=';')
+        if(i == saving_String.size() - 1 && character!=';') //Checks if it's the last word of the line
         {
             saving_Word = saving_String.substr(last_index,i+1 - last_index);
             if(saving_Word.empty())
@@ -116,17 +110,7 @@ void push2Plus_Words(vector<string> &word_Vec, string saving_String, char &curre
 }
 
 void trim_String(string &saving_String) {
-/*    if(saving_String[0] == ' ') // Check if there's a space at the beggining of the string
-    {
-        saving_String = saving_String.substr(1,saving_String.size()-1);
-    }
-    char last_char = saving_String[saving_String.size()-1];
-    if(last_char == ' ' || last_char == '\n' || last_char == '\r')
-    {
-        cout << saving_String[saving_String.size()-1];
-        saving_String = saving_String.substr(0,saving_String.size()-1);
-    }*/
-    //remove o espaco branco no inicio e no fim da string
+    //Removes any sort of useless character from our string (more common to happen in g++)
     const auto sBegin = saving_String.find_first_not_of(" \t\n\v\f\r");
     const auto sEnd = saving_String.find_last_not_of(" \t\n\v\f\r");
     const auto range = sEnd - sBegin;
@@ -134,28 +118,14 @@ void trim_String(string &saving_String) {
     saving_String = saving_String.substr(sBegin, range + 1);
 }
 
-/*bool compareString(const string a,const string b) //Checks if the name needs to be sorted
+void quickSort(vector<string> &word_Vec)        //Uses the quicksort algorithm to sort the vector
 {
-    return strcasecmp(a.c_str(),b.c_str()) <= 0;
-}*/
-
-void quickSort(vector<string> &word_Vec)
-{
+    cout.flush();
     cout << "Sorting words ... " << endl;
     sort(word_Vec.begin(), word_Vec.end());
-//    qsort(word_Vec, word_Vec.size(), sizeof(string), compareString);
 }
 
-void push_Words(vector<string> &word_Vec, string saving_String)
-{
-    if(!saving_String.empty())
-    {
-        trim_String(saving_String);
-        word_Vec.push_back(saving_String);
-    }
-}
-
-void remove_Null(vector<string> &word_Vec)
+void remove_Null(vector<string> &word_Vec)      //Removes any null strings on vector created by the duplicates
 {
     for(int i = 0; i<word_Vec.size(); ++i)
     {
@@ -167,8 +137,8 @@ void remove_Null(vector<string> &word_Vec)
     }
 }
 
-bool valid_Word(string saving_String)
-{
+bool valid_Word(string saving_String)       //Checks if a word is valid(needed to be done separatedly for more
+{                                           //than one situation
     for (int i = 0; i < saving_String.size(); ++i) {
         char character = saving_String[i];
         if ((character < 'A' || character >'Z' ) && character != '\n' && character!='\r')
@@ -180,7 +150,7 @@ bool valid_Word(string saving_String)
     return true;
 }
 
-void newChar(char next_char, char &current_char)
+void newChar(char next_char, char &current_char)    // Checks it's needed to change the character on screen
 {
     if(next_char > current_char && next_char >= 'A' && next_char <='Z')
     {
